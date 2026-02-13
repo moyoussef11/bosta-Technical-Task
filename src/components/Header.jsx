@@ -45,7 +45,7 @@ const Header = () => {
           <li>
             <Link
               className="capitalize border border-gray-300 rounded-lg py-2 px-4 font-bold hover:bg-gray-100 duration-200"
-              to="/"
+              to="/login"
             >
               login
             </Link>
@@ -53,7 +53,7 @@ const Header = () => {
           <li>
             <Link
               className="capitalize border border-main bg-main text-white rounded-lg py-2 px-4 font-bold hover:bg-main/70 duration-200"
-              to="/"
+              to="/register"
             >
               signup
             </Link>
@@ -111,7 +111,7 @@ const Header = () => {
           <li>
             <Link
               className="capitalize border border-gray-300 rounded-lg py-2 px-4 font-bold hover:bg-gray-100 duration-200"
-              to="/"
+              to="/login"
               onClick={() => setToggle(false)}
             >
               login
@@ -120,7 +120,7 @@ const Header = () => {
           <li>
             <Link
               className="capitalize border border-main bg-main text-white rounded-lg py-2 px-4 font-bold hover:bg-main/70 duration-200"
-              to="/"
+              to="/register"
               onClick={() => setToggle(false)}
             >
               signup
