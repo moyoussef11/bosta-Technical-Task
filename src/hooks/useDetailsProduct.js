@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProductsStore } from '../store/products.store';
 import { useCartStore } from '../store/cart.store';
+import { useAuthStore } from '../store/auth.store';
 
 const useDetailsProduct = () => {
   const { id } = useParams();
@@ -11,6 +12,7 @@ const useDetailsProduct = () => {
   const addToCart = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
   const isInCart = cart.some((p) => p.id === productDetailsData.id);
+  const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
     if (id) {
@@ -22,7 +24,7 @@ const useDetailsProduct = () => {
     window.scrollTo(0, 0);
   }, [id]);
 
-  return { id, productDetailsData, isInCart, addToCart, loading };
+  return { id, productDetailsData, isInCart, addToCart, loading, token };
 };
 
 export default useDetailsProduct;

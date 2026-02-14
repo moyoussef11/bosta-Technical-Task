@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import useDetailsProduct from '../hooks/useDetailsProduct';
 
 const DetailsProduct = () => {
-  const { id, productDetailsData, isInCart, addToCart, loading } =
+  const { id, productDetailsData, isInCart, addToCart, loading, token } =
     useDetailsProduct();
   if (loading) return <ProductDetailsSkeleton />;
   if (productDetailsData == '') return <NotFoundProduct id={id} />;
@@ -68,8 +68,12 @@ const DetailsProduct = () => {
             <button
               disabled={isInCart}
               onClick={() => {
-                addToCart(productDetailsData);
-                toast.success('Added to cart successfully');
+                if (!token) {
+                  toast.error('please log in to add product to cart');
+                } else {
+                  addToCart(productDetailsData);
+                  toast.success('Added to cart successfully');
+                }
               }}
               className={`rounded-lg ${isInCart ? 'bg-gray-400 cursor-not-allowed opacity-60' : 'bg-main hover:opacity-70 cursor-pointer'} py-2 font-bold text-white transition-opacity  capitalize flex items-center justify-center gap-2 px-2 text-sm`}
             >

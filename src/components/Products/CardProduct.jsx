@@ -2,12 +2,13 @@ import { CircleCheckBigIcon, Eye, ShoppingBasketIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../../store/cart.store';
 import { toast } from 'react-toastify';
+import { useAuthStore } from '../../store/auth.store';
 
 const CardProduct = ({ product }) => {
   const addToCart = useCartStore((state) => state.addToCart);
   const cart = useCartStore((state) => state.cart);
   const isInCart = cart.some((p) => p.id === product.id);
-
+  const token = useAuthStore((state) => state.token);
 
   return (
     <div className="flex flex-col gap-2 justify-between shadow-lg rounded-2xl hover:-translate-y-5 duration-200">
@@ -37,8 +38,12 @@ const CardProduct = ({ product }) => {
           <button
             disabled={isInCart}
             onClick={() => {
-              addToCart(product);
-              toast.success('Added to cart successfully');
+              if (!token) {
+                toast.error('please log in to add product to cart');
+              } else {
+                addToCart(product);
+                toast.success('Added to cart successfully');
+              }
             }}
             className={`rounded-lg ${isInCart ? 'bg-gray-400 cursor-not-allowed opacity-60' : 'bg-main hover:opacity-70 cursor-pointer'} py-2 font-bold text-white transition-opacity  capitalize flex items-center justify-center gap-2 px-2 text-sm`}
           >
