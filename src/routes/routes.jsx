@@ -6,6 +6,8 @@ import CreateProduct from '../pages/CreateProduct';
 import Cart from '../pages/Cart';
 import Login from '../pages/Auth/Login';
 import Signup from '../pages/Auth/Signup';
+import PublicRoute from '../middleware/PublicRoute';
+import Auth from '../middleware/Auth';
 
 const RoutesConfig = () => {
   return (
@@ -13,10 +15,14 @@ const RoutesConfig = () => {
       <Routes>
         <Route path="/" element={<Products />} />
         <Route path="/product/:id" element={<DetailsProduct />} />
-        <Route path="/create-product" element={<CreateProduct />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Signup />} />
+        <Route element={<Auth />}>
+          <Route path="/create-product" element={<CreateProduct />} />
+          <Route path="/cart" element={<Cart />} />
+        </Route>
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
+        </Route>
       </Routes>
     </Layout>
   );

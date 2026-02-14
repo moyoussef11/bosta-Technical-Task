@@ -7,13 +7,30 @@ import {
   Undo2Icon,
 } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import productImg from '../assets/product-test.png';
 import ProductDetailsSkeleton from '../components/Products/ProductDetailsSkeleton';
+import { useEffect } from 'react';
+import { useProductsStore } from '../store/products.store';
+import NotFoundProduct from '../components/Products/NotFoundProduct';
 
 const DetailsProduct = () => {
   const { id } = useParams();
+  const fetchProductById = useProductsStore((state) => state.fetchProductById);
+  const productDetailsData = useProductsStore((state) => state.product);
+  const loading = useProductsStore((state) => state.loading);
 
-  console.log(id);
+
+  useEffect(() => {
+    if (id) {
+      fetchProductById(id);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  if (loading) return <ProductDetailsSkeleton />;
+  if (productDetailsData == '') return <NotFoundProduct id={id} />;
 
   return (
     <>
@@ -26,11 +43,15 @@ const DetailsProduct = () => {
             <li className="text-slate-400">
               <ChevronRight className="size-3" />
             </li>
-            <li className="capitalize text-slate-400 text-sm">category</li>
+            <li className="capitalize text-slate-400 text-sm">
+              {productDetailsData?.category}
+            </li>
             <li className="text-slate-400">
               <ChevronRight className="size-3" />
             </li>
-            <li className="capitalize text-slate-900 text-sm">title product</li>
+            <li className="capitalize text-slate-900 text-sm">
+              {productDetailsData?.title}
+            </li>
           </ul>
           <Link
             to="/"
@@ -43,26 +64,21 @@ const DetailsProduct = () => {
         <div className="details my-5 flex flex-col md:flex-row items-center gap-10">
           <div className="w-full h-70 md:h-125 md:w-1/2 rounded-2xl">
             <img
-              className="rounded-2xl h-full w-full object-cover"
-              src={productImg}
-              alt="productImg"
+              className="rounded-2xl h-full w-full object-contain"
+              src={productDetailsData?.image}
+              alt={productDetailsData?.title}
             />
           </div>
           <div className="w-full md:w-1/2 flex flex-col gap-5">
             <span className="bg-main/20 text-main px-2 py-1 rounded-2xl w-fit">
-              category
+              {productDetailsData?.category}
             </span>
             <h3 className="capitalize font-semibold text-3xl">
-              Premium Wireless Noise-Cancelling Headphones
+              {productDetailsData?.title}{' '}
             </h3>
-            <strong className="text-xl">$299.00</strong>
-            <p className="text-slate-500">
-              Experience unparalleled sound quality with our flagship
-              noise-cancelling headphones. Featuring advanced 40mm drivers and
-              industry-leading active noise cancellation technology, these
-              headphones create a sanctuary of sound wherever you go.
-            </p>
-            <button class="rounded-lg bg-main py-2 font-bold text-white transition-opacity hover:opacity-70 cursor-pointer capitalize flex items-center justify-center gap-2 px-2 text-sm">
+            <strong className="text-xl">${productDetailsData?.price}</strong>
+            <p className="text-slate-500">{productDetailsData?.description}</p>
+            <button className="rounded-lg bg-main py-2 font-bold text-white transition-opacity hover:opacity-70 cursor-pointer capitalize flex items-center justify-center gap-2 px-2 text-sm">
               <ShoppingBasketIcon className="size-5" />
               Add to Cart
             </button>
@@ -76,13 +92,12 @@ const DetailsProduct = () => {
               </li>
               <li className="capitalize text-slate-400 text-sm flex items-center gap-2">
                 <Clock9 className="size-5" />
-                14-Day Returns
+                30-Day Returns
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <ProductDetailsSkeleton />
     </>
   );
 };

@@ -3,3 +3,7 @@
 @theme {
   --color-main: #04d2c8;
 }
+
+html {
+  scroll-behavior: smooth;
+}

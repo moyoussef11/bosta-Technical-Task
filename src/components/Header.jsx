@@ -1,18 +1,24 @@
 import { Menu, ShoppingCart, Store, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuthStore } from '../store/auth.store';
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
   const location = useLocation();
   const pathname = location.pathname.split('/')[1];
+  const token = useAuthStore((state) => state.token);
+  const logoutUser = useAuthStore((state) => state.logoutUser);
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 flex items-center justify-between py-5 bg-white/80 backdrop-blur-md px-4 md:px-10 lg:px-14 xl:px-20">
-      <div className="text-main hover:cursor-pointer w-fit flex items-center capitalize gap-2">
+      <Link
+        to="/"
+        className="text-main hover:cursor-pointer w-fit flex items-center capitalize gap-2"
+      >
         <Store />
         <h4 className="text-2xl font-bold">store</h4>
-      </div>
+      </Link>
       <nav className="hidden md:block">
         <ul className="flex items-center gap-5 flex-wrap">
           <li>
@@ -42,22 +48,36 @@ const Header = () => {
               </span>
             </Link>
           </li>
-          <li>
-            <Link
-              className="capitalize border border-gray-300 rounded-lg py-2 px-4 font-bold hover:bg-gray-100 duration-200"
-              to="/login"
-            >
-              login
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="capitalize border border-main bg-main text-white rounded-lg py-2 px-4 font-bold hover:bg-main/70 duration-200"
-              to="/register"
-            >
-              signup
-            </Link>
-          </li>
+          {token ? (
+            <li>
+              <button
+                onClick={() => logoutUser()}
+                className="bg-white rounded-lg py-2 px-4 border border-red-500 text-red-500 cursor-pointer"
+              >
+                logout
+              </button>
+            </li>
+          ) : (
+            <>
+              {' '}
+              <li>
+                <Link
+                  className="capitalize border border-gray-300 rounded-lg py-2 px-4 font-bold hover:bg-gray-100 duration-200"
+                  to="/login"
+                >
+                  login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="capitalize border border-main bg-main text-white rounded-lg py-2 px-4 font-bold hover:bg-main/70 duration-200"
+                  to="/register"
+                >
+                  signup
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
       <div className="block md:hidden">
@@ -108,24 +128,33 @@ const Header = () => {
               </span>
             </Link>
           </li>
-          <li>
-            <Link
-              className="capitalize border border-gray-300 rounded-lg py-2 px-4 font-bold hover:bg-gray-100 duration-200"
-              to="/login"
-              onClick={() => setToggle(false)}
-            >
-              login
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="capitalize border border-main bg-main text-white rounded-lg py-2 px-4 font-bold hover:bg-main/70 duration-200"
-              to="/register"
-              onClick={() => setToggle(false)}
-            >
-              signup
-            </Link>
-          </li>
+          {token ? (
+            <li>
+              <button className="bg-white rounded-lg py-2 px-4 border border-red-500 text-red-500 cursor-pointer">
+                logout
+              </button>
+            </li>
+          ) : (
+            <>
+              {' '}
+              <li>
+                <Link
+                  className="capitalize border border-gray-300 rounded-lg py-2 px-4 font-bold hover:bg-gray-100 duration-200"
+                  to="/login"
+                >
+                  login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="capitalize border border-main bg-main text-white rounded-lg py-2 px-4 font-bold hover:bg-main/70 duration-200"
+                  to="/register"
+                >
+                  signup
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </header>
