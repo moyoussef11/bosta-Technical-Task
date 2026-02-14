@@ -1,16 +1,88 @@
-# React + Vite
+🛒 Bosta Frontend Assessment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application built as part of the Bosta Frontend Technical Assignment.
 
-Currently, two official plugins are available:
+🚀 Live Demo : https://bosta-technical-task-five.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📋 Project Overview
 
-## React Compiler
+This project is a React-based frontend application that demonstrates core frontend development concepts including:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+API Integration
 
-## Expanding the ESLint configuration
+State Management using Zustand
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Component-Based Architecture
+
+Clean & Maintainable Code
+
+Responsive UI Design
+
+Route Protection & Mock Authentication
+
+The application allows users to:
+
+Browse products
+
+Filter and sort products
+
+View product details
+
+Add products to cart
+
+Manage cart items
+
+🛠️ Tech Stack
+
+React 19
+
+Vite
+
+Tailwind CSS v4
+
+Zustand (State Management)
+
+Axios (API Calls)
+
+React Router v7
+
+React Toastify
+
+Lucide React Icons
+
+✨ Features
+
+✔ Fetch products from API
+✔ Product listing page
+✔ Product details page
+✔ Sorting & filtering
+✔ Cart functionality with add/remove/update
+✔ Disabled Add-to-Cart logic if already added
+✔ Toast notifications
+✔ Responsive design
+✔ Loading states (skeletons)
+✔ Error handling
+✔ Route protection
+✔ Mock authentication
+
+🔐 Authentication Notes
+
+The authentication system is mocked for demonstration purposes to simulate real-world route protection and user flows.
+
+Demo Credentials:
+
+Username: johnd
+Password: m38rmF$
+
+
+⚙️ Installation & Setup
+
+git clone https://github.com/moyoussef11/bosta-Technical-Task.git
+cd bosta-Technical-Task
+npm install
+npm run dev
+
+👨‍💻 Author
+
+Mohamed Youssef
+
