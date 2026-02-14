@@ -133,7 +133,10 @@ const Header = () => {
           {token ? (
             <li>
               <button
-                onClick={() => logoutUser()}
+                onClick={() => {
+                  logoutUser();
+                  setToggle(false);
+                }}
                 className="bg-white rounded-lg py-2 px-4 border border-red-500 text-red-500 cursor-pointer"
               >
                 logout
