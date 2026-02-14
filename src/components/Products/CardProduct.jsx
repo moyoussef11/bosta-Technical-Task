@@ -1,7 +1,14 @@
-import { Eye, ShoppingBasketIcon } from 'lucide-react';
+import { CircleCheckBigIcon, Eye, ShoppingBasketIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCartStore } from '../../store/cart.store';
+import { toast } from 'react-toastify';
 
 const CardProduct = ({ product }) => {
+  const addToCart = useCartStore((state) => state.addToCart);
+  const cart = useCartStore((state) => state.cart);
+  const isInCart = cart.some((p) => p.id === product.id);
+
+
   return (
     <div className="flex flex-col gap-2 justify-between shadow-lg rounded-2xl hover:-translate-y-5 duration-200">
       <div className="rounded-2xl relative">
@@ -27,9 +34,25 @@ const CardProduct = ({ product }) => {
             <Eye className="size-5" />
             View
           </Link>
-          <button className="rounded-lg bg-main py-2 font-bold text-white transition-opacity hover:opacity-70 cursor-pointer capitalize flex items-center justify-center gap-2 px-2 text-sm">
-            <ShoppingBasketIcon className="size-5" />
-            Add to Cart
+          <button
+            disabled={isInCart}
+            onClick={() => {
+              addToCart(product);
+              toast.success('Added to cart successfully');
+            }}
+            className={`rounded-lg ${isInCart ? 'bg-gray-400 cursor-not-allowed opacity-60' : 'bg-main hover:opacity-70 cursor-pointer'} py-2 font-bold text-white transition-opacity  capitalize flex items-center justify-center gap-2 px-2 text-sm`}
+          >
+            {isInCart ? (
+              <>
+                <CircleCheckBigIcon className="size-5" />
+                Added
+              </>
+            ) : (
+              <>
+                <ShoppingBasketIcon className="size-5" />
+                Add to Cart
+              </>
+            )}
           </button>
         </div>
       </div>

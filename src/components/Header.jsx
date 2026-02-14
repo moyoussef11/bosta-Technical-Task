@@ -2,6 +2,7 @@ import { Menu, ShoppingCart, Store, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../store/auth.store';
+import { useCartStore } from '../store/cart.store';
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
@@ -9,6 +10,7 @@ const Header = () => {
   const pathname = location.pathname.split('/')[1];
   const token = useAuthStore((state) => state.token);
   const logoutUser = useAuthStore((state) => state.logoutUser);
+  const cart = useCartStore((state) => state.cart);
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200 flex items-center justify-between py-5 bg-white/80 backdrop-blur-md px-4 md:px-10 lg:px-14 xl:px-20">
@@ -44,7 +46,7 @@ const Header = () => {
             >
               <ShoppingCart />
               <span className="text-white bg-main rounded-full px-1 absolute -top-2 right-0 text-[10px]">
-                0
+                {cart?.length}
               </span>
             </Link>
           </li>
@@ -124,7 +126,7 @@ const Header = () => {
             >
               <ShoppingCart />
               <span className="text-white bg-main rounded-full px-1 absolute -top-2 right-0 text-[10px]">
-                0
+                {cart?.length}
               </span>
             </Link>
           </li>

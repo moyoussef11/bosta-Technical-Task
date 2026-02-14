@@ -1,34 +1,21 @@
 import {
   Car,
   ChevronRight,
+  CircleCheckBigIcon,
   Clock9,
   Shield,
   ShoppingBasketIcon,
   Undo2Icon,
 } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ProductDetailsSkeleton from '../components/Products/ProductDetailsSkeleton';
-import { useEffect } from 'react';
-import { useProductsStore } from '../store/products.store';
 import NotFoundProduct from '../components/Products/NotFoundProduct';
+import { toast } from 'react-toastify';
+import useDetailsProduct from '../hooks/useDetailsProduct';
 
 const DetailsProduct = () => {
-  const { id } = useParams();
-  const fetchProductById = useProductsStore((state) => state.fetchProductById);
-  const productDetailsData = useProductsStore((state) => state.product);
-  const loading = useProductsStore((state) => state.loading);
-
-
-  useEffect(() => {
-    if (id) {
-      fetchProductById(id);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [id]);
-
+  const { id, productDetailsData, isInCart, addToCart, loading } =
+    useDetailsProduct();
   if (loading) return <ProductDetailsSkeleton />;
   if (productDetailsData == '') return <NotFoundProduct id={id} />;
 
@@ -78,9 +65,25 @@ const DetailsProduct = () => {
             </h3>
             <strong className="text-xl">${productDetailsData?.price}</strong>
             <p className="text-slate-500">{productDetailsData?.description}</p>
-            <button className="rounded-lg bg-main py-2 font-bold text-white transition-opacity hover:opacity-70 cursor-pointer capitalize flex items-center justify-center gap-2 px-2 text-sm">
-              <ShoppingBasketIcon className="size-5" />
-              Add to Cart
+            <button
+              disabled={isInCart}
+              onClick={() => {
+                addToCart(productDetailsData);
+                toast.success('Added to cart successfully');
+              }}
+              className={`rounded-lg ${isInCart ? 'bg-gray-400 cursor-not-allowed opacity-60' : 'bg-main hover:opacity-70 cursor-pointer'} py-2 font-bold text-white transition-opacity  capitalize flex items-center justify-center gap-2 px-2 text-sm`}
+            >
+              {isInCart ? (
+                <>
+                  <CircleCheckBigIcon className="size-5" />
+                  Added
+                </>
+              ) : (
+                <>
+                  <ShoppingBasketIcon className="size-5" />
+                  Add to Cart
+                </>
+              )}
             </button>
             <ul className="flex items-center flex-wrap gap-3 mx-auto my-2">
               <li className="capitalize text-slate-400 text-sm flex items-center gap-2">

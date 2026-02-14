@@ -66,6 +66,10 @@ const useAddProduct = () => {
     }
   }, [added, nav]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return { submit, form, setForm, categoriesData, loading };
 };
 

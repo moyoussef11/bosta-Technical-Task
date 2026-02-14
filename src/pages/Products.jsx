@@ -2,50 +2,21 @@ import { ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-react';
 import CardProduct from '../components/Products/CardProduct';
 import CardProductSkeleton from '../components/Products/CardProductSkeleton';
 import NotFoundProducts from '../components/Products/NotFoundProducts';
-import { useProductsStore } from '../store/products.store';
-import { useEffect, useState } from 'react';
 import CategoriesSkeleton from '../components/Products/CategoriesSkeleton';
+import useProducts from '../hooks/useProducts';
 
 const Products = () => {
-  const productsData = useProductsStore((state) => state.products);
-  const getProductsData = useProductsStore((state) => state.fetchProducts);
-  const categoriesData = useProductsStore((state) => state.categories);
-  const getCategoriesData = useProductsStore((state) => state.fetchCategories);
-  const loading = useProductsStore((state) => state.loading);
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [sortOrder, setSortOrder] = useState('');
-
-  useEffect(() => {
-    getProductsData();
-    getCategoriesData();
-  }, []);
-
-  const filteredProducts =
-    selectedCategory === 'all'
-      ? productsData
-      : productsData.filter((product) => product.category === selectedCategory);
-
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortOrder === 'low') return a.price - b.price;
-    if (sortOrder === 'high') return b.price - a.price;
-    return 0;
-  });
-
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10;
-  const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-
-  const currentProducts = sortedProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentProducts]);
+  const {
+    loading,
+    categoriesData,
+    setSelectedCategory,
+    selectedCategory,
+    setSortOrder,
+    currentProducts,
+    setCurrentPage,
+    currentPage,
+    totalPages,
+  } = useProducts();
 
   return (
     <div className="pt-16 py-5">
