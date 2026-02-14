@@ -20,13 +20,13 @@ const Products = () => {
 
   return (
     <div className="pt-16 py-5">
-      <div className="filters flex items-center justify-between flex-col gap-5 md:flex-row border-b border-slate-200 pb-5">
+      <div className="filters flex items-center justify-between flex-col gap-5 md:flex-row border-b border-slate-200 pb-5 mx-auto">
         {loading ? (
           <CategoriesSkeleton />
         ) : categoriesData.length === 0 ? (
           'not found categories'
         ) : (
-          <div className="categories flex items-center flex-wrap gap-2">
+          <div className="categories flex items-center justify-center flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory('all')}
               className={`rounded-full capitalize ${selectedCategory === 'all' ? 'bg-main text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-main hover:text-main'}  px-4 py-1.5 text-sm font-medium  cursor-pointer`}
