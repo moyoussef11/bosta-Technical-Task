@@ -132,7 +132,10 @@ const Header = () => {
           </li>
           {token ? (
             <li>
-              <button className="bg-white rounded-lg py-2 px-4 border border-red-500 text-red-500 cursor-pointer">
+              <button
+                onClick={() => logoutUser()}
+                className="bg-white rounded-lg py-2 px-4 border border-red-500 text-red-500 cursor-pointer"
+              >
                 logout
               </button>
             </li>
@@ -141,6 +144,8 @@ const Header = () => {
               {' '}
               <li>
                 <Link
+                  to="/login"
+                  onClick={() => setToggle(false)}
                   className="capitalize border border-gray-300 rounded-lg py-2 px-4 font-bold hover:bg-gray-100 duration-200"
                   to="/login"
                 >
@@ -149,6 +154,7 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  onClick={() => setToggle(false)}
                   className="capitalize border border-main bg-main text-white rounded-lg py-2 px-4 font-bold hover:bg-main/70 duration-200"
                   to="/register"
                 >
